@@ -1,0 +1,34 @@
+{
+    "name": "yggdrascript-support",
+    "displayName": "YggdraScript Support",
+    "description": "Language support for YggdraScript",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.75.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "yggdrascript",
+                "aliases": [
+                    "YggdraScript",
+                    "ygg"
+                ],
+                "extensions": [
+                    ".ygg"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "yggdrascript",
+                "scopeName": "source.ygg",
+                "path": "./syntaxes/yggdrascript.tmLanguage.json"
+            }
+        ]
+    }
+}

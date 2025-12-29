@@ -1,0 +1,72 @@
+{
+    "scopeName": "source.ygg",
+    "patterns": [
+        {
+            "comment": "Single line comment",
+            "match": "#.*$",
+            "name": "comment.line.number-sign.ygg"
+        },
+        {
+            "comment": "Strings",
+            "begin": "\"",
+            "end": "\"",
+            "name": "string.quoted.double.ygg",
+            "patterns": [
+                {
+                    "match": "\\\\.",
+                    "name": "constant.character.escape.ygg"
+                }
+            ]
+        },
+        {
+            "comment": "Keywords",
+            "match": "\\b(state|fn|service|use|as|if|else|loop|in|onMount)\\b",
+            "name": "keyword.control.ygg"
+        },
+        {
+            "comment": "HTTP Verbs",
+            "match": "\\b(get|post|put|delete)\\b",
+            "name": "keyword.other.http.ygg"
+        },
+        {
+            "comment": "Types",
+            "match": "\\b(string|number|bool|array|object)\\b",
+            "name": "storage.type.ygg"
+        },
+        {
+            "comment": "UI Components (Start of line Capitalized)",
+            "match": "^\\s*([A-Z][a-zA-Z0-9]*)",
+            "captures": {
+                "1": {
+                    "name": "entity.name.tag.ygg"
+                }
+            }
+        },
+        {
+            "comment": "Properties (.prop:)",
+            "match": "(\\.[a-zA-Z0-9]+)\\s*(:)",
+            "captures": {
+                "1": {
+                    "name": "entity.other.attribute-name.ygg"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value.ygg"
+                }
+            }
+        },
+        {
+            "comment": "Pseudo-classes (&:hover)",
+            "match": "(&:[a-z-]+)",
+            "name": "entity.other.attribute-name.pseudo-class.ygg"
+        },
+        {
+            "comment": "Functions",
+            "match": "\\b([a-zA-Z0-9_]+)\\s*\\(",
+            "captures": {
+                "1": {
+                    "name": "entity.name.function.ygg"
+                }
+            }
+        }
+    ]
+}
