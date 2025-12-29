@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "bin": {
-    "yggdrascript": "bin/ygg.js"
+    "ygg": "bin/ygg.js"
   },
   "directories": {
     "example": "examples"
