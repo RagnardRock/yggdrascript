@@ -53,23 +53,83 @@ service TodoApi : https://dummyjson.com
 
 ### C. Import et Usage
 Pour utiliser un service, il faut l'importer dans la logique.
-Syntaxe : `use [Service] as [Alias]`
+
+**Méthode 1 : Classique**
+`use ServiceName as alias`
+
+**Méthode 2 : Import Direct (Fullstack)** `Nouveau v0.9.5`
+Si vous avez un fichier `api.ygg` décrivant votre backend, importez-le directement !
+`use ../server/api.ygg as api`
 
 ~~~ 
-use TodoApi as api
+# App.ygg
+use ../server/api.ygg as api
 
 fn demo()
     # Appel transparent (génère await api.search("text"))
     res = api.search("text")
 ~~~
 
+### D. Le Backend (Server) `Nouveau`
+Vous pouvez définir votre serveur Express directement en YggdraScript.
+
+~~~
+# api.ygg
+server MyApi : 4444
+
+# State serveur (persistant en mémoire)
+state users = []
+
+get /users
+    return users
+
+post /users ?name
+    users.push({ name: name })
+    return users
+~~~
+
+
 ---
 
-## 4. La Logique Métier
+## 4. Les Composants `Nouveau`
+Tout fichier `.ygg` est potentiellement un composant réutilisable.
+
+### A. Création
+Créez simplement un fichier (ex: `components/Button.ygg`).
+
+~~~
+# components/Button.ygg
+state string text = "Click me"
+
+Button
+    .content: text
+    .padding: 10
+    .bg: "blue"
+    .color: "white"
+~~~
+
+### B. Import et Usage
+Importez le composant avec `use`.
+
+~~~
+# App.ygg
+use ./components/Button.ygg as MyButton
+
+VBox
+    MyButton
+        .text: "Envoyer" # Override du state initial possible (à venir)
+~~~
+
+---
+
+## 5. La Logique Métier
 
 ### A. Le State
 Déclaration des variables réactives.
 Syntaxe : `state [type] [nom] = [valeur]`
+
+*Note : Le type est optionnel si une valeur par défaut est fournie.*
+`state users = []` (Type Array inféré)
 
 ~~~ 
 state array tasks = []
@@ -77,7 +137,17 @@ state string inputValue = ""
 state bool isLoading = false
 ~~~
 
-### B. Lifecycle `Nouveau`
+### B. Mots-clés Spéciaux `Nouveau`
+
+**1. Wait (Pause)**
+Une syntaxe propre pour attendre.
+`wait 1000` (attend 1 seconde)
+
+**2. Indexation Python-style**
+Accéder au dernier élément d'un tableau simplement.
+`lastItem = items[-1]`
+
+### C. Lifecycle
 Le bloc `onMount` est exécuté au chargement du composant.
 
 ~~~ 
@@ -85,7 +155,7 @@ onMount
     loadData()
 ~~~
 
-### C. Fonctions "Magiques"
+### C. Fonctions
 L'indentation définit le corps.
 * **Async/Await Auto** : Si vous appelez une fonction de service (ex: `api.get()`), le compilateur ajoute `await` automatiquement.
 * **Variables Locales** : Si vous assignez une variable qui n'est pas un `state`, le compilateur ajoute `let` ou `const` automatiquement.
@@ -93,7 +163,7 @@ L'indentation définit le corps.
 ~~~ 
 fn loadData()
     isLoading = true
-    # Magie : devient 'const data = await api.getAll()'
+    # devient 'const data = await api.getAll()'
     data = api.getAll() 
     tasks = data.todos
     isLoading = false
@@ -154,9 +224,11 @@ Génère des `<template v-if="...">`.
 
 ~~~ 
 if isLoading
-    Text.content: "Chargement..."
+    Text
+        .content: "Chargement..."
 else
-    VBox.content: "Prêt"
+    VBox
+        .content: "Prêt"
 ~~~
 
 ### B. Boucles (Loop)
@@ -165,16 +237,19 @@ Génère des `<template v-for="...">`.
 ~~~ 
 # 1. Simple
 loop item in items
-    Text.content: item
+    Text
+        .content: item
 
 # 2. Avec Index
 loop item, i in items
-    Text.content: i + " - " + item.name
+    Text
+        .content: i + " - " + item.name
 
 # 3. Avec Clé (Recommandé)
 loop task in tasks
     .key: task.id
-    Text.content: task.title
+    Text
+        .content: task.title
 ~~~
 
 ---

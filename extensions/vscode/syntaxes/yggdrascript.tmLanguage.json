@@ -20,7 +20,7 @@
         },
         {
             "comment": "Keywords",
-            "match": "\\b(state|fn|service|use|as|if|else|loop|in|onMount)\\b",
+            "match": "\\b(state|fn|server|service|use|as|if|else|loop|in|onMount|wait)\\b",
             "name": "keyword.control.ygg"
         },
         {
