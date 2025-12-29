@@ -1,12 +1,12 @@
-# 🌳 YggdraScript (YGS) - Documentation Technique v0.9
+# 🌳 YggdraScript (YGS) - Documentation Technique v0.9.5
 
 ## 1. Philosophie
 YggdraScript est un langage unifié conçu pour accélérer le développement d'applications web connectées. Il fusionne la définition des services API, la logique métier et l'interface utilisateur dans un flux unique et lisible.
 
-* **Version actuelle :** v0.9
+* **Version actuelle :** v0.9.5
 * **Extension :** `.ygg`
 * **Approche :** "Code Less, Do More" (Gestion automatique de l'asynchrone, des imports et du binding).
-* **Sortie :** Single File Component Vue 3 (`.vue`) + Script Setup.
+* **Sortie :** "Arborescence UI vue 3 + gestion serverside en express"
 
 ---
 
